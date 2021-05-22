@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Sample Running Machine</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/6f062a899d.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Sample Running (Balance: <span id="amount">0</span> &euro;)</h2>
+      <form id="runningForm">
+        <div class="form-group row">
+          <label for="machineNum" class="col-sm-2 col-form-label">Machine</label>
+          <div class="col-md-8">
+            <select id="machineNum" class="form-control">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputAmount" class="col-sm-2 col-form-label">Amount (&euro;)</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control" id="inputAmount" placeholder="Amount">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-8">
+            <button type="submit" class="btn btn-primary">Run</button>
+          </div>
+        </div>
+      </form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Machine</th>
+            <th scope="col">Mode</th>
+            <th scope="col">Timer</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th id="m1" scope="row">1</th>
+            <td id="m1mode">1 (1 &euro;/min)</td>
+            <td id="m1timer">0</td>
+            <td id="m1stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+          </tr>
+          <tr>
+            <th id="m2" scope="row">2</th>
+            <td id="m2mode">1 (1 &euro;/min)</td>
+            <td id="m2timer">0</td>
+            <td id="m2stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+          </tr>
+          <tr>
+            <th id="m3" scope="row">3</th>
+            <td id="m3mode">2 (1.5 &euro;/min)</td>
+            <td id="m3timer">0</td>
+            <td id="m3stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script src="./assets/js/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./action.js"></script>
+  </body>
+</html>
