@@ -27,7 +27,7 @@ module.exports = async function (req, res, next) {
       store.load()
       store.set('bal', bal + Number(req.body.a))
       store.load()
-      var timerCount = await timer(req.body.m, req.body.t)
+      var timerCount = await timer(req.body.m, req.body.t, req.body.o)
       store.set('stat.' + req.body.m, 0)
       store.load()
       res.status(200).json({
