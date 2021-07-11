@@ -274,7 +274,7 @@ function machineTimer(machine, bal, mode, curr) {
     $("#m" + machine + "bal").html("<center>0 MIOTA</center>");
     mObj[machine].bal = 0.0;
     document.getElementById("m" + machine + "butt").disabled = true;
-    $.ajax({
+    /* $.ajax({
       url: "/api/address?m=" + machine,
       type: "GET",
       success: function (res) {
@@ -285,7 +285,7 @@ function machineTimer(machine, bal, mode, curr) {
       error: function (err) {
         console.error(err);
       }
-    });
+    }); */
   } else {
     // console.log(timeleft)
     // balanceleft -= 1
