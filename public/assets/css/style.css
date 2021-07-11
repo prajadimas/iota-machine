@@ -72,3 +72,7 @@ li:not(:first-child) {
   box-align: center;
   box-pack: center;
 }
+
+.tdbreak {
+  word-break: break-all
+}

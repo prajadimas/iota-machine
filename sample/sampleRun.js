@@ -25,7 +25,7 @@ module.exports = async function (req, res, next) {
       store.get('bal') ? bal =  store.get('bal') : bal = bal
       store.set('stat.' + req.body.m, 1)
       store.load()
-      store.set('bal', bal + Number(req.body.a))
+      // store.set('bal', bal + Number(req.body.a))
       store.load()
       var timerCount = await timer(req.body.m, req.body.t, req.body.o)
       store.set('stat.' + req.body.m, 0)

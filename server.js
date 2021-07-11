@@ -12,6 +12,8 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const createError = require('http-errors')
 const serveStatic = require('serve-static')
+const cron = require('node-cron')
+const machineBalanceChecker = require('./modules/machineBalanceChecker')
 var app = express()
 require('dotenv').config()
 
@@ -22,6 +24,8 @@ const sample = require('./sample/index')
 var server = require('http').createServer(app)
 var io = require('socket.io')(server)
 app.set('socketio', io)
+
+// var clientIds = []
 
 // All middleware configurations goes here
 /* Configuration of the body-parser to get data from POST requests */
@@ -85,6 +89,46 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Client disconnected.')
   })
+})
+
+cron.schedule('*/30 * * * * *', async () => {
+  console.log('running every 30 seconds')
+  // console.log(io)
+  var m1runner = await machineBalanceChecker(1)
+  console.log(m1runner)
+  var m2runner = await machineBalanceChecker(2)
+  console.log(m2runner)
+  var m3runner = await machineBalanceChecker(3)
+  console.log(m3runner)
+  var m4runner = await machineBalanceChecker(4)
+  console.log(m4runner)
+  var m5runner = await machineBalanceChecker(5)
+  console.log(m5runner)
+  if (m1runner.d > 0) {
+    io.emit('m1bal', {
+      bal: m1runner.d
+    })
+  }
+  if (m2runner.d > 0) {
+    io.emit('m2bal', {
+      bal: m2runner.d
+    })
+  }
+  if (m3runner.d > 0) {
+    io.emit('m3bal', {
+      bal: m3runner.d
+    })
+  }
+  if (m4runner.d > 0) {
+    io.emit('m4bal', {
+      bal: m4runner.d
+    })
+  }
+  if (m5runner.d > 0) {
+    io.emit('m5bal', {
+      bal: m5runner.d
+    })
+  }
 })
 
 // Export our app for another purposes

@@ -1,10 +1,77 @@
-(function ($) {
+var machine = [1,2,3,4,5];
+var mObj = [];
+var usingTimer = null;
+
+(async function ($) {
 
   var socketId = null;
-
   var socket = io();
+  var currency = await getCurrencies();
+  console.log("Currency", currency);
+  // console.log(mObj);
 
-  getBalance();
+  // getBalance();
+  // getCurrencies();
+  getMachineAddress();
+
+  $.each(machine, function (i, val) {
+    // console.log(i, val);
+
+    document.getElementById("m" + val + "butt").disabled = true;
+
+    mObj.push({
+      idx: val,
+      bal: 0.0,
+      mode: 4,
+      timer: 0
+    })
+
+    $("#inputMode" + val).on("change", function (evt) {
+      // var inputMode1 = $("#inputMode1").val();
+      mObj[val].mode = Number($("#inputMode" + val).val());
+      console.log("Mode Machine (" + val + ")", mObj[val].mode);
+    })
+
+    socket.on("m" + val + "bal", function (msg) {
+      console.log("Message: ", msg);
+      mObj[val].bal += Number(msg.bal);
+      $("#m" + val + "bal").html("<center>" + (mObj[val].bal/1000000.0).toFixed(3).toString() + " MIOTA</center>");
+      document.getElementById("m" + val + "butt").disabled = false;
+    });
+
+    $("#m" + val + "butt").on("click", function (evt) {
+      evt.preventDefault();
+      console.log("Butt Value", $("#m" + val + "butt").val());
+      if ($("#m" + val + "butt").val() === "0") {
+        usingTimer = setInterval(function () {
+          machineTimer(val, mObj[val].bal, mObj[val].mode, currency)
+        }, 1000);
+        $("#m" + val + "butt").val("1");
+        $("#m" + val + "butt").removeClass("btn-primary");
+        $("#m" + val + "butt").addClass("btn-danger");
+        $("#m" + val + "butt").html("STOP");
+        $("#m" + val + "stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:green\"></i></center>");
+      } else {
+        clearInterval(usingTimer);
+        $("#m" + val + "butt").val("0");
+        $("#m" + val + "butt").removeClass("btn-danger");
+        $("#m" + val + "butt").addClass("btn-primary");
+        $("#m" + val + "butt").html("START");
+        $("#m" + val + "stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
+      }
+
+      // machineTimer(val, mObj[val].bal, mObj[val].mode, currency);
+    });
+
+  });
+
+  // $("#inputMode1").on("change", function (evt) {
+    // var inputMode1 = $("#inputMode1").val();
+
+  // })
+
+  /**
+   *
 
   socket.on("timer count", function (msg) {
     // $('#messages').append($('<li>').text(msg));
@@ -18,6 +85,50 @@
       $("#m" + msg.machine + "mode").html(msg.mode);
     }
   });
+
+  $("#machineNum").on("change", function (evt) {
+    var machineSelected = $("#machineNum").val();
+    $.ajax({
+      url: "/api/address?m=" + machineSelected.toString(),
+      type: "GET",
+      success: function (res) {
+        // console.log("RESULT: ", res);
+        $("#m-addr").html(res.addr);
+        document.getElementById("qr-addr").src = res.url;
+      },
+      error: function (err) {
+        console.error(err);
+      }
+    });
+  })
+
+  $("#inputMode").on("change", function (evt) {
+    var inputMode = $("#inputMode").val();
+    $.ajax({
+      url: "/api/cur",
+      type: "GET",
+      success: function (res) {
+        console.log("RESULT: ", res);
+        // $("#amount").html(res.eur);
+        if (inputMode === "1" || inputMode === "4" || inputMode === "7") {
+          // timeRunning = Number(Number(runningAmount)) * 60;
+          $("#inputAmount").val((Math.ceil((1.0/Number(res.eur)) * 1000 * 1000000)/1000).toString());
+        } else if (inputMode === "2" || inputMode === "5" || inputMode === "6") {
+          // timeRunning = Number(Number(runningAmount)/2) * 60;
+          $("#inputAmount").val((Math.ceil((2.0/Number(res.eur)) * 1000 * 1000000)/1000).toString());
+        } else if (inputMode === "3") {
+          // timeRunning = Number(Number(runningAmount)/0.5) * 60;
+          $("#inputAmount").val((Math.ceil((0.5/Number(res.eur)) * 1000 * 1000000)/1000).toString());
+        } else {
+          // timeRunning = 0;
+          $("#inputAmount").val(0);
+        }
+      },
+      error: function (err) {
+        console.error(err);
+      }
+    });
+  })
 
   $("#runningForm").on("submit", function (evt) {
     evt.preventDefault();
@@ -79,7 +190,167 @@
 
   });
 
+   *
+   */
+
 })(jQuery);
+
+
+function getMachineAddress() {
+  $.ajax({
+    url: "/api/address?m=1",
+    type: "GET",
+    success: function (res) {
+      // console.log("RESULT: ", res);
+      $("#m1addr").html(res.addr);
+      document.getElementById("qr1addr").src = res.url;
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+  $.ajax({
+    url: "/api/address?m=2",
+    type: "GET",
+    success: function (res) {
+      // console.log("RESULT: ", res);
+      $("#m2addr").html(res.addr);
+      document.getElementById("qr2addr").src = res.url;
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+  $.ajax({
+    url: "/api/address?m=3",
+    type: "GET",
+    success: function (res) {
+      // console.log("RESULT: ", res);
+      $("#m3addr").html(res.addr);
+      document.getElementById("qr3addr").src = res.url;
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+  $.ajax({
+    url: "/api/address?m=4",
+    type: "GET",
+    success: function (res) {
+      // console.log("RESULT: ", res);
+      $("#m4addr").html(res.addr);
+      document.getElementById("qr4addr").src = res.url;
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+  $.ajax({
+    url: "/api/address?m=5",
+    type: "GET",
+    success: function (res) {
+      // console.log("RESULT: ", res);
+      $("#m5addr").html(res.addr);
+      document.getElementById("qr5addr").src = res.url;
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+}
+
+function machineTimer(machine, bal, mode, curr) {
+  console.log(machine, bal, mode, curr);
+  var balanceused = 0.0;
+  var balanceleft = Number(bal);
+  if (balanceleft <= 0.0) {
+    // console.log('stop')
+    clearInterval(usingTimer);
+    $("#m" + machine + "butt").val("0");
+    $("#m" + machine + "butt").removeClass("btn-danger");
+    $("#m" + machine + "butt").addClass("btn-primary");
+    $("#m" + machine + "butt").html("START");
+    $("#m" + machine + "stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
+    $("#m" + machine + "bal").html("<center>0 MIOTA</center>");
+    mObj[machine].bal = 0.0;
+    document.getElementById("m" + machine + "butt").disabled = true;
+    $.ajax({
+      url: "/api/address?m=" + machine,
+      type: "GET",
+      success: function (res) {
+        // console.log("RESULT: ", res);
+        $("#m" + machine + "addr").html(res.addr);
+        document.getElementById("qr" + machine + "addr").src = res.url;
+      },
+      error: function (err) {
+        console.error(err);
+      }
+    });
+  } else {
+    // console.log(timeleft)
+    // balanceleft -= 1
+    if (mode === 1 || mode === 4 || mode === 7) {
+      balanceused = (Math.ceil(((1.0/60.0)/Number(curr)) * 1000000.0 * 1000.0)/1000.0);
+    } else if (mode === 2 || mode === 5 || mode === 6) {
+      balanceused = (Math.ceil(((2.0/60.0)/Number(curr)) * 1000000.0 * 1000.0)/1000.0);
+    } else if (mode === 3) {
+      balanceused = (Math.ceil(((0.5/60.0)/Number(curr)) * 1000000.0 * 1000.0)/1000.0);
+    }
+    console.log("Balance Used", balanceused);
+    balanceleft -= balanceused;
+    if (balanceleft > 0.0) {
+      mObj[machine].bal = balanceleft;
+      $("#m" + machine + "bal").html("<center>" + (balanceleft/1000000.0).toFixed(3).toString() + " MIOTA</center>");
+      $("#m" + machine + "fee").html("<center>" + (balanceused/1000000.0 * 60).toFixed(3).toString() + " (MIOTA/min)</center>");
+    } else {
+      clearInterval(usingTimer);
+      mObj[machine].bal = 0.0;
+      $("#m" + machine + "butt").val("0");
+      $("#m" + machine + "butt").removeClass("btn-danger");
+      $("#m" + machine + "butt").addClass("btn-primary");
+      $("#m" + machine + "butt").html("START");
+      $("#m" + machine + "stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
+      $("#m" + machine + "bal").html("<center>0 MIOTA</center>");
+      document.getElementById("m" + machine + "butt").disabled = true;
+      $.ajax({
+        url: "/api/address?m=" + machine,
+        type: "GET",
+        success: function (res) {
+          // console.log("RESULT: ", res);
+          $("#m" + machine + "addr").html(res.addr);
+          document.getElementById("qr" + machine + "addr").src = res.url;
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
+}
+
+function getCurrencies() {
+  return new Promise((resolve, reject) => {
+    try {
+      $.ajax({
+        url: "/api/cur",
+        type: "GET",
+        success: function (res) {
+          console.log("RESULT: ", res);
+          // $("#amount").html(res.eur);
+          resolve(res.eur);
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  })
+}
+
+/**
+ *
 
 function getBalance() {
   $.ajax({
@@ -94,3 +365,21 @@ function getBalance() {
     }
   });
 }
+
+function getCurrencies() {
+  $.ajax({
+    url: "/api/cur",
+    type: "GET",
+    success: function (res) {
+      console.log("RESULT: ", res);
+      // $("#amount").html(res.eur);
+      $("#inputAmount").val((Math.ceil((1.0/Number(res.eur)) * 1000 * 1000000)/1000).toString());
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+}
+
+ *
+ */

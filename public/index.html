@@ -44,8 +44,9 @@
   </head>
   <body>
     <div class="container">
-      <h2>Sample Running (Balance: <span id="amount">0</span> &euro;)</h2>
-      <form id="runningForm">
+      <!-- h2>Sample Running (Balance: <span id="amount">0</span> &euro;)</h2 -->
+      <h2>Sample Running</h2>
+      <!-- form id="runningForm">
         <div class="form-group row">
           <label for="machineNum" class="col-sm-2 col-form-label">Machine</label>
           <div class="col-md-10">
@@ -65,56 +66,198 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputAmount" class="col-sm-2 col-form-label">Amount (&euro;)</label>
+          <-label for="inputAmount" class="col-sm-2 col-form-label">Amount (&euro;)</label->
+          <label for="inputAmount" class="col-sm-2 col-form-label">Amount (IOTA/min)</label>
           <div class="col-md-10">
-            <input type="text" class="form-control" id="inputAmount" placeholder="Amount">
+            <input type="text" class="form-control" id="inputAmount" readonly>
           </div>
         </div>
-        <div class="form-group row">
+        <center>
+          <p id="m-addr">-</p>
+          <img id="qr-addr" src="" width="150" height="150"></img>
+        </center>
+        <-div class="form-group row">
           <div class="col">
             <button type="submit" class="btn btn-primary">Run</button>
           </div>
-        </div>
-      </form>
+        </div->
+      </form -->
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Machine</th>
-            <th scope="col">Mode</th>
-            <th scope="col">Timer</th>
-            <th scope="col">Status</th>
+            <th scope="col">
+              <center>Machine 1</center>
+            </th>
+            <th scope="col">
+              <center>Machine 2</center>
+            </th>
+            <th scope="col">
+              <center>Machine 3</center>
+            </th>
+            <th scope="col">
+              <center>Machine 4</center>
+            </th>
+            <th scope="col">
+              <center>Machine 5</center>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th id="m1" scope="row">1</th>
-            <td id="m1mode">-</td>
-            <td id="m1timer">0</td>
-            <td id="m1stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
-          </tr>
-          <tr>
-            <th id="m2" scope="row">2</th>
-            <td id="m2mode">-</td>
+            <td scope="row" class="tdbreak">
+              <center>
+                <p id="m1addr" style="max-width:150px;">-</p>
+                <img id="qr1addr" src="" width="150" height="150"></img>
+              </center>
+            </td>
+            <td scope="row" class="tdbreak">
+              <center>
+                <p id="m2addr" style="max-width:150px;">-</p>
+                <img id="qr2addr" src="" width="150" height="150"></img>
+              </center>
+            </td>
+            <td scope="row" class="tdbreak">
+              <center>
+                <p id="m3addr" style="max-width:150px;">-</p>
+                <img id="qr3addr" src="" width="150" height="150"></img>
+              </center>
+            </td>
+            <td scope="row" class="tdbreak">
+              <center>
+                <p id="m4addr" style="max-width:150px;">-</p>
+                <img id="qr4addr" src="" width="150" height="150"></img>
+              </center>
+            </td>
+            <td scope="row" class="tdbreak">
+              <center>
+                <p id="m5addr" style="max-width:150px;">-</p>
+                <img id="qr5addr" src="" width="150" height="150"></img>
+              </center>
+            </td>
+            <!-- td id="m2mode">-</td>
             <td id="m2timer">0</td>
-            <td id="m2stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+            <td id="m2stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td -->
           </tr>
           <tr>
-            <th id="m3" scope="row">3</th>
-            <td id="m3mode">-</td>
-            <td id="m3timer">0</td>
-            <td id="m3stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+            <td id="m1mode" scope="row">
+              <center>
+              <div class="form-group row">
+                <div class="col-md-10">
+                  <input id="inputMode1" class="preset1" type="range" min="1" max="7" data-width="100" data-height="100" data-angleOffset="220" data-angleRange="280">
+                </div>
+              </div>
+              </center>
+            </td>
+            <td id="m2mode" scope="row">
+              <center>
+              <div class="form-group row">
+                <div class="col-md-10">
+                  <input id="inputMode2" class="preset1" type="range" min="1" max="7" data-width="100" data-height="100" data-angleOffset="220" data-angleRange="280">
+                </div>
+              </div>
+              </center>
+            </td>
+            <td id="m3mode" scope="row">
+              <center>
+              <div class="form-group row">
+                <div class="col-md-10">
+                  <input id="inputMode3" class="preset1" type="range" min="1" max="7" data-width="100" data-height="100" data-angleOffset="220" data-angleRange="280">
+                </div>
+              </div>
+              </center>
+            </td>
+            <td id="m4mode" scope="row">
+              <center>
+              <div class="form-group row">
+                <div class="col-md-10">
+                  <input id="inputMode4" class="preset1" type="range" min="1" max="7" data-width="100" data-height="100" data-angleOffset="220" data-angleRange="280">
+                </div>
+              </div>
+              </center>
+            </td>
+            <td id="m5mode" scope="row">
+              <center>
+              <div class="form-group row">
+                <div class="col-md-10">
+                  <input id="inputMode5" class="preset1" type="range" min="1" max="7" data-width="100" data-height="100" data-angleOffset="220" data-angleRange="280">
+                </div>
+              </div>
+              </center>
+            </td>
+            <!--td id="m1mode">-</td>
+            <td id="m1timer">0</td>
+            <td id="m1stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td -->
           </tr>
           <tr>
-            <th id="m3" scope="row">4</th>
-            <td id="m4mode">-</td>
-            <td id="m4timer">0</td>
-            <td id="m4stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+            <td id="m1bal" scope="row">
+              <center>0 MIOTA</center>
+            </th>
+            <td id="m2bal" scope="row">
+              <center>0 MIOTA</center>
+            </td>
+            <td id="m3bal" scope="row">
+              <center>0 MIOTA</center>
+            </td>
+            <td id="m4bal" scope="row">
+              <center>0 MIOTA</center>
+            </td>
+            <td id="m5bal" scope="row">
+              <center>0 MIOTA</center>
+            </td>
+            <!-- td id="m2mode">-</td>
+            <td id="m2timer">0</td>
+            <td id="m2stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td -->
           </tr>
           <tr>
-            <th id="m3" scope="row">5</th>
-            <td id="m5mode">-</td>
-            <td id="m5timer">0</td>
-            <td id="m5stat"><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></td>
+            <td id="m1fee" scope="row">
+              <center>0 (MIOTA/min)</center>
+            </td>
+            <td id="m2fee" scope="row">
+              <center>0 (MIOTA/min)</center>
+            </td>
+            <td id="m3fee" scope="row">
+              <center>0 (MIOTA/min)</center>
+            </td>
+            <td id="m4fee" scope="row">
+              <center>0 (MIOTA/min)</center>
+            </td>
+            <td id="m5fee" scope="row">
+              <center>0 (MIOTA/min)</center>
+            </td>
+          </tr>
+          <tr>
+            <td scope="row">
+              <center>
+                <button id="m1butt" value="0" class="btn btn-primary">START</button>
+              </center>
+            </td>
+            <td scope="row">
+              <center>
+                <button id="m2butt" value="0" class="btn btn-primary">START</button>
+              </center>
+            </td>
+            <td scope="row">
+              <center>
+                <button id="m3butt" value="0" class="btn btn-primary">START</button>
+              </center>
+            </td>
+            <td scope="row">
+              <center>
+                <button id="m4butt" value="0" class="btn btn-primary">START</button>
+              </center>
+            </td>
+            <td scope="row">
+              <center>
+                <button id="m5butt" value="0" class="btn btn-primary">START</button>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td id="m1stat"><center><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></center></td>
+            <td id="m2stat"><center><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></center></td>
+            <td id="m3stat"><center><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></center></td>
+            <td id="m4stat"><center><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></center></td>
+            <td id="m5stat"><center><i class="fa fa-circle" aria-hidden="true" style="color:red"></i></center></td>
           </tr>
         </tbody>
       </table>
