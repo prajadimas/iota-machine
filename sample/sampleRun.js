@@ -6,16 +6,25 @@ const store = require('data-store')({
 })
 const timer = require('../modules/machineTimer')
 
+/**
+ *	helper function to log date+text to console:
+ */
+const log = (text) => {
+	console.log(`[${new Date().toLocaleString()}] ${text}`)
+}
+
 module.exports = async function (req, res, next) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  console.log('Accessing [API]: ', req.method + ' ' + req.originalUrl || req.url, 'CLIENT ACCESS from', ip)
+  log(`Accessing [API]: ${req.method} ${req.originalUrl || req.url}, CLIENT ACCESS from ${ip}`)
+  // console.log('Accessing [API]: ', req.method + ' ' + req.originalUrl || req.url, 'CLIENT ACCESS from', ip)
   var io = req.app.get('socketio')
   var socketId = null
   try {
     // req.body.id ? socketId = req.body.id : socketId = null
     // console.log('Sentence: ', req.body.text)
     // socketId ? io.to(socketId).emit('process', { step: 'SENTENCE:\n', out: req.body.text + '\n' }) : socketId = socketId
-    console.log('Body Request: ', req.body)
+    log(`Body Request: ${JSON.stringify(req.body).toString()}`)
+    // console.log('Body Request: ', req.body)
     if (store.get('stat.' + req.body.m) === 1) {
       res.status(200).json({
         message: 'In Use'
@@ -37,7 +46,8 @@ module.exports = async function (req, res, next) {
       })
     }
   } catch (err) {
-    console.error(err)
+    log(`Error: ${JSON.stringify(err).toString()}`)
+    // console.error(err)
     next(createError(500))
   }
 }

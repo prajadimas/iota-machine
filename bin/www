@@ -9,6 +9,13 @@ var http = require('http')
 require('dotenv').config()
 
 /**
+ *	helper function to log date+text to console:
+ */
+const log = (text) => {
+	console.log(`[${new Date().toLocaleString()}] ${text}`)
+}
+
+/**
  * Get port from environment and store in Express.
  */
 var port = normalizePort(process.env.PORT || '8888')
@@ -55,11 +62,13 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
+      log(`Error: ${bind} requires elevated privileges`)
+      // console.error(bind + ' requires elevated privileges')
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+      log(`Error: ${bind} is already in use`)
+      // console.error(bind + ' is already in use')
       process.exit(1)
       break
     default:

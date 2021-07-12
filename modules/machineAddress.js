@@ -4,6 +4,13 @@
 
 require('dotenv').config()
 
+/**
+ *	helper function to log date+text to console:
+ */
+const log = (text) => {
+	console.log(`[${new Date().toLocaleString()}] ${text}`)
+}
+
 module.exports = function (machine) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -19,10 +26,12 @@ module.exports = function (machine) {
 
       // Always sync before doing anything with the account
       const synced = await account.sync()
-      console.log('Syncing...')
+      log(`Syncing...`)
+      // console.log('Syncing...')
 
       const { address } = account.generateAddress()
-      console.log('Machine ' + machine + ' address:', address)
+      log(`Machine ${machine}, address on ${address}`)
+      // console.log('Machine ' + machine + ' address:', address)
       resolve(address)
     } catch (err) {
       reject(err)

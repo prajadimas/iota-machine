@@ -17,6 +17,13 @@ const machineBalanceChecker = require('./modules/machineBalanceChecker')
 var app = express()
 require('dotenv').config()
 
+/**
+ *	helper function to log date+text to console:
+ */
+const log = (text) => {
+	console.log(`[${new Date().toLocaleString()}] ${text}`)
+}
+
 // Includes routing
 const sample = require('./sample/index')
 
@@ -78,32 +85,40 @@ app.use(function (err, req, res, next) {
 })
 
 io.on('connection', (socket) => {
-  console.log('Client connected.')
+  log(`Client connected on ${socket.id}}`)
+  // console.log('Client connected.')
   io.to(socket.id).emit('socket id', {
     id: socket.id
   })
   socket.on('timer', (data) => {
-    console.log(data)
+    // console.log(data)
     io.emit('timer count', data)
   })
   socket.on('disconnect', () => {
-    console.log('Client disconnected.')
+    log(`Client disconnected on ${socket.id}}`)
+    // console.log('Client disconnected.')
   })
 })
 
-cron.schedule('*/30 * * * * *', async () => {
-  console.log('running every 30 seconds')
+cron.schedule('0 */1 * * * *', async () => {
+  log(`Running every 1 minute`)
+  // console.log('running every 30 seconds')
   // console.log(io)
   var m1runner = await machineBalanceChecker(1)
-  console.log(m1runner)
+  log(`Machine 1 ${JSON.stringify(m1runner).toString()}}`)
+  // console.log(m1runner)
   var m2runner = await machineBalanceChecker(2)
-  console.log(m2runner)
+  log(`Machine 2 ${JSON.stringify(m2runner).toString()}}`)
+  // console.log(m2runner)
   var m3runner = await machineBalanceChecker(3)
-  console.log(m3runner)
+  log(`Machine 3 ${JSON.stringify(m3runner).toString()}}`)
+  // console.log(m3runner)
   var m4runner = await machineBalanceChecker(4)
-  console.log(m4runner)
+  log(`Machine 4 ${JSON.stringify(m4runner).toString()}}`)
+  // console.log(m4runner)
   var m5runner = await machineBalanceChecker(5)
-  console.log(m5runner)
+  log(`Machine 5 ${JSON.stringify(m5runner).toString()}}`)
+  // console.log(m5runner)
   if (m1runner.d > 0) {
     io.emit('m1bal', {
       bal: m1runner.d

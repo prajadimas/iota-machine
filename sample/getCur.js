@@ -1,9 +1,17 @@
 const createError = require('http-errors')
 const eurExc = require('../modules/eurExc')
 
+/**
+ *	helper function to log date+text to console:
+ */
+const log = (text) => {
+	console.log(`[${new Date().toLocaleString()}] ${text}`)
+}
+
 module.exports = async function (req, res, next) {
   var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  console.log('Accessing [API]: ', req.method + ' ' + req.originalUrl || req.url, 'CLIENT ACCESS from', ip)
+  log(`Accessing [API]: ${req.method} ${req.originalUrl || req.url}, CLIENT ACCESS from ${ip}`)
+  // console.log('Accessing [API]: ', req.method + ' ' + req.originalUrl || req.url, 'CLIENT ACCESS from', ip)
   try {
     var currencies = await eurExc()
     // console.log('Currencies', currencies)
@@ -14,7 +22,8 @@ module.exports = async function (req, res, next) {
       eur: last
     })
   } catch (err) {
-    console.error(err)
+    log(`Error: ${JSON.stringify(err).toString()}`)
+    // console.error(err)
     next(createError(500))
   }
 }
