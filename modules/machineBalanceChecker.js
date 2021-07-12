@@ -9,6 +9,13 @@ const store = require('data-store')({
 const eurExc = require('./eurExc')
 require('dotenv').config()
 
+/**
+ *	helper function to log date+text to console:
+ */
+const log = (text) => {
+	console.log(`[${new Date().toLocaleString()}] ${text}`)
+}
+
 module.exports = function (machine) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -33,8 +40,10 @@ module.exports = function (machine) {
 
       // Always sync before doing anything with the account
       const synced = await account.sync()
-      console.log('Syncing...')
-      console.log('Machine ' + machine + ' balance:', account.balance().available)
+      log(`Syncing...`)
+      // console.log('Syncing...')
+      // log(`Machine ${machine}, with balance ${account.balance().available}`)
+      // console.log('Machine ' + machine + ' balance:', account.balance().available)
       store.set('mbal.' + machine, account.balance().available)
       store.load()
       resolve({

@@ -28,7 +28,7 @@ module.exports = function (machine) {
       const synced = await account.sync()
       log(`Syncing...`)
       // console.log('Syncing...')
-      log(`Machine ${machine}, with balance ${account.balance().available}`)
+      // log(`Machine ${machine}, with balance ${account.balance().available}`)
       // console.log('Machine ' + machine + ' balance:', account.balance().available)
       resolve(account.balance().available)
     } catch (err) {
