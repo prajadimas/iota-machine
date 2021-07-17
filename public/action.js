@@ -1,10 +1,12 @@
 var machine = [1,2,3,4,5];
 var mObj = [];
 var usingTimer = null;
+var socketId = null;
+var mReady = [false,false,false,false,false];
 
 (async function ($) {
 
-  var socketId = null;
+  // var worker = new Worker('worker.js');
   var socket = io();
   var currency = await getCurrencies();
   console.log("Currency", currency);
@@ -64,6 +66,31 @@ var usingTimer = null;
     });
 
   });
+
+  var checkBal1 = setInterval(() => {
+    console.log('checking every 30s');
+    mReady[0] ? socket.emit('mbal1', { m: 1 }) : true;
+  }, 30000);
+
+  var checkBal2 = setInterval(() => {
+    console.log('checking every 30s');
+    mReady[1] ? socket.emit('mbal2', { m: 2 }) : true;
+  }, 30000);
+
+  var checkBal3 = setInterval(() => {
+    console.log('checking every 30s');
+    mReady[2] ? socket.emit('mbal3', { m: 3 }) : true;
+  }, 30000);
+
+  var checkBal4 = setInterval(() => {
+    console.log('checking every 30s');
+    mReady[3] ? socket.emit('mbal4', { m: 4 }) : true;
+  }, 30000);
+
+  var checkBal5 = setInterval(() => {
+    console.log('checking every 30s');
+    mReady[4] ? socket.emit('mbal5', { m: 5 }) : true;
+  }, 30000);
 
   // $("#inputMode1").on("change", function (evt) {
     // var inputMode1 = $("#inputMode1").val();
@@ -204,6 +231,7 @@ function getMachineAddress() {
       // console.log("RESULT: ", res);
       $("#m1addr").html(res.addr);
       document.getElementById("qr1addr").src = res.url;
+      mReady[0] = true;
     },
     error: function (err) {
       console.error(err);
@@ -216,6 +244,7 @@ function getMachineAddress() {
       // console.log("RESULT: ", res);
       $("#m2addr").html(res.addr);
       document.getElementById("qr2addr").src = res.url;
+      mReady[1] = true;
     },
     error: function (err) {
       console.error(err);
@@ -228,6 +257,7 @@ function getMachineAddress() {
       // console.log("RESULT: ", res);
       $("#m3addr").html(res.addr);
       document.getElementById("qr3addr").src = res.url;
+      mReady[2] = true;
     },
     error: function (err) {
       console.error(err);
@@ -240,6 +270,7 @@ function getMachineAddress() {
       // console.log("RESULT: ", res);
       $("#m4addr").html(res.addr);
       document.getElementById("qr4addr").src = res.url;
+      mReady[3] = true;
     },
     error: function (err) {
       console.error(err);
@@ -252,6 +283,7 @@ function getMachineAddress() {
       // console.log("RESULT: ", res);
       $("#m5addr").html(res.addr);
       document.getElementById("qr5addr").src = res.url;
+      mReady[4] = true;
     },
     error: function (err) {
       console.error(err);

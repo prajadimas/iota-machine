@@ -12,7 +12,8 @@ const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const createError = require('http-errors')
 const serveStatic = require('serve-static')
-const cron = require('node-cron')
+// const Bree = require('bree')
+// const cron = require('node-cron')
 const machineBalanceChecker = require('./modules/machineBalanceChecker')
 var app = express()
 require('dotenv').config()
@@ -86,6 +87,61 @@ io.on('connection', (socket) => {
   io.to(socket.id).emit('socket id', {
     id: socket.id
   })
+	socket.on('mbal1', async (data) => {
+    // console.log(data)
+		log(`Machine 1 check`)
+		var m1runner = await machineBalanceChecker(1)
+	  log(`Machine 1 ${JSON.stringify(m1runner).toString()}`)
+		if (m1runner.d > 0) {
+	    io.emit('m1bal', {
+	      bal: m1runner.d
+	    })
+	  }
+  })
+	socket.on('mbal2', async (data) => {
+    // console.log(data)
+		log(`Machine 2 check`)
+		var m2runner = await machineBalanceChecker(2)
+	  log(`Machine 2 ${JSON.stringify(m2runner).toString()}`)
+		if (m2runner.d > 0) {
+	    io.emit('m2bal', {
+	      bal: m2runner.d
+	    })
+	  }
+  })
+	socket.on('mbal3', async (data) => {
+    // console.log(data)
+		log(`Machine 3 check`)
+		var m3runner = await machineBalanceChecker(3)
+	  log(`Machine 3 ${JSON.stringify(m3runner).toString()}`)
+		if (m3runner.d > 0) {
+	    io.emit('m3bal', {
+	      bal: m3runner.d
+	    })
+	  }
+  })
+	socket.on('mbal4', async (data) => {
+    // console.log(data)
+		log(`Machine 4 check`)
+		var m4runner = await machineBalanceChecker(4)
+	  log(`Machine 4 ${JSON.stringify(m4runner).toString()}`)
+		if (m4runner.d > 0) {
+	    io.emit('m4bal', {
+	      bal: m4runner.d
+	    })
+	  }
+  })
+	socket.on('mbal5', async (data) => {
+    // console.log(data)
+		log(`Machine 5 check`)
+		var m5runner = await machineBalanceChecker(5)
+	  log(`Machine 5 ${JSON.stringify(m5runner).toString()}`)
+		if (m5runner.d > 0) {
+	    io.emit('m5bal', {
+	      bal: m5runner.d
+	    })
+	  }
+  })
   socket.on('timer', (data) => {
     // console.log(data)
     io.emit('timer count', data)
@@ -96,7 +152,46 @@ io.on('connection', (socket) => {
   })
 })
 
-cron.schedule('0 */1 * * * *', async () => {
+//
+// NOTE: see the "Instance Options" section below in this README
+// for the complete list of options and their defaults
+//
+// const bree = new Bree({
+  //
+  // NOTE: by default the `logger` is set to `console`
+  // however we recommend you to use CabinJS as it
+  // will automatically add application and worker metadata
+  // to your log output, and also masks sensitive data for you
+  // <https://cabinjs.com>
+  //
+  // logger: new Cabin(),
+
+  //
+  // NOTE: instead of passing this Array as an option
+  // you can create a `./jobs/index.js` file, exporting
+  // this exact same array as `module.exports = [ ... ]`
+  // doing so will allow you to keep your job configuration and the jobs
+  // themselves all in the same folder and very organized
+  //
+  // See the "Job Options" section below in this README
+  // for the complete list of job options and configurations
+  //
+  /* jobs: [
+    // runs `./jobs/sample.js` **NOT** on start, but every 10s
+    {
+      name: 'sample',
+      timeout: false, // <-- specify `false` here to prevent default timeout (e.g. on start)
+      interval: '10s'
+    }
+  ] */
+// })
+
+// bree.start()
+
+/**
+ *
+
+cron.schedule('0 /1 * * * *', async () => {
 	try {
 		log(`Running every 1 minute`)
 	  // console.log('running every 30 seconds')
@@ -145,6 +240,9 @@ cron.schedule('0 */1 * * * *', async () => {
 		log(`Error: ${JSON.stringify(err).toString()}`)
 	}
 })
+
+ *
+ */
 
 // Export our app for another purposes
 module.exports = { app: app, server: server }
