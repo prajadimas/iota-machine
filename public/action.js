@@ -100,14 +100,14 @@ var mReady = [false,false,false,false,false];
       $("#m1butt").removeClass("btn-primary");
       $("#m1butt").addClass("btn-danger");
       $("#m1butt").html("STOP");
-      $("#m1butt").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:green\"></i></center>");
+      $("#m1stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:green\"></i></center>");
     } else {
       clearInterval(usingTimer);
       $("#m1butt").val("0");
       $("#m1butt").removeClass("btn-danger");
       $("#m1butt").addClass("btn-primary");
       $("#m1butt").html("START");
-      $("#m1butt").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
+      $("#m1stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
     }
 
     // machineTimer(val, mObj[val].bal, mObj[val].mode, currency);
