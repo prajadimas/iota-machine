@@ -30,14 +30,14 @@ var mReady = [false,false,false,false,false];
 
     $("#inputMode" + val).on("change", function (evt) {
       // var inputMode1 = $("#inputMode1").val();
-      mObj[val].mode = Number($("#inputMode" + val).val());
-      console.log("Mode Machine (" + val + ")", mObj[val].mode);
+      mObj[i].mode = Number($("#inputMode" + val).val());
+      console.log("Mode Machine (" + val + ")", mObj[i].mode);
     })
 
     socket.on("m" + val + "bal", function (msg) {
       console.log("Message: ", msg);
-      mObj[val].bal += Number(msg.bal);
-      $("#m" + val + "bal").html("<center>" + (mObj[val].bal/1000000.0).toFixed(3).toString() + " MIOTA</center>");
+      mObj[i].bal += Number(msg.bal);
+      $("#m" + val + "bal").html("<center>" + (mObj[i].bal/1000000.0).toFixed(3).toString() + " MIOTA</center>");
       document.getElementById("m" + val + "butt").disabled = false;
     });
 
@@ -46,7 +46,7 @@ var mReady = [false,false,false,false,false];
       console.log("Butt Value", $("#m" + val + "butt").val());
       if ($("#m" + val + "butt").val() === "0") {
         usingTimer = setInterval(function () {
-          machineTimer(val, mObj[val].bal, mObj[val].mode, currency)
+          machineTimer(val, mObj[i].bal, mObj[i].mode, currency)
         }, 1000);
         $("#m" + val + "butt").val("1");
         $("#m" + val + "butt").removeClass("btn-primary");
@@ -344,7 +344,7 @@ function machineTimer(machine, bal, mode, curr) {
       $("#m" + machine + "stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
       $("#m" + machine + "bal").html("<center>0 MIOTA</center>");
       document.getElementById("m" + machine + "butt").disabled = true;
-      $.ajax({
+      /* $.ajax({
         url: "/api/address?m=" + machine,
         type: "GET",
         success: function (res) {
@@ -355,7 +355,7 @@ function machineTimer(machine, bal, mode, curr) {
         error: function (err) {
           console.error(err);
         }
-      });
+      }); */
     }
   }
 }
