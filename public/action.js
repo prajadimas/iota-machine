@@ -350,7 +350,7 @@ function machineTimer(machine, bal, mode, curr) {
     $("#m" + machine + "butt").html("START");
     $("#m" + machine + "stat").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
     $("#m" + machine + "bal").html("<center>0 MIOTA</center>");
-    mObj[machine].bal = 0.0;
+    mObj[machine - 1].bal = 0.0;
     document.getElementById("m" + machine + "butt").disabled = true;
     /* $.ajax({
       url: "/api/address?m=" + machine,
@@ -377,12 +377,12 @@ function machineTimer(machine, bal, mode, curr) {
     console.log("Balance Used", balanceused);
     balanceleft -= balanceused;
     if (balanceleft > 0.0) {
-      mObj[machine].bal = balanceleft;
+      mObj[machine - 1].bal = balanceleft;
       $("#m" + machine + "bal").html("<center>" + (balanceleft/1000000.0).toFixed(3).toString() + " MIOTA</center>");
       $("#m" + machine + "fee").html("<center>" + (balanceused/1000000.0 * 60).toFixed(3).toString() + " (MIOTA/min)</center>");
     } else {
       clearInterval(usingTimer);
-      mObj[machine].bal = 0.0;
+      mObj[machine - 1].bal = 0.0;
       $("#m" + machine + "butt").val("0");
       $("#m" + machine + "butt").removeClass("btn-danger");
       $("#m" + machine + "butt").addClass("btn-primary");
