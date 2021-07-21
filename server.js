@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
 	    })
 	  }
   })
-	socket.on('mbal2', async (data) => {
+	/* socket.on('mbal2', async (data) => {
     // console.log(data)
 		log(`Machine 2 check`)
 		var m2runner = await machineBalanceChecker(2)
@@ -141,7 +141,7 @@ io.on('connection', (socket) => {
 	      bal: m5runner.d
 	    })
 	  }
-  })
+  }) */
   socket.on('timer', (data) => {
     // console.log(data)
     io.emit('timer count', data)

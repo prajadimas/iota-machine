@@ -16,7 +16,7 @@ var mReady = [false,false,false,false,false];
   // getCurrencies();
   getMachineAddress();
 
-  $.each(machine, function (i, val) {
+  /* $.each(machine, function (i, val) {
     // console.log(i, val);
 
     document.getElementById("m" + val + "butt").disabled = true;
@@ -65,6 +65,52 @@ var mReady = [false,false,false,false,false];
       // machineTimer(val, mObj[val].bal, mObj[val].mode, currency);
     });
 
+  }); */
+
+  document.getElementById("m1butt").disabled = true;
+
+  mObj.push({
+    idx: 1,
+    bal: 0.0,
+    mode: 4,
+    timer: 0
+  })
+
+  $("#inputMode1").on("change", function (evt) {
+    // var inputMode1 = $("#inputMode1").val();
+    mObj[0].mode = Number($("#inputMode1").val());
+    console.log("Mode Machine (1)", mObj[0].mode);
+  })
+
+  socket.on("m1bal", function (msg) {
+    console.log("Message: ", msg);
+    mObj[0].bal += Number(msg.bal);
+    $("#m1bal").html("<center>" + (mObj[0].bal/1000000.0).toFixed(3).toString() + " MIOTA</center>");
+    document.getElementById("m1butt").disabled = false;
+  });
+
+  $("#m1butt").on("click", function (evt) {
+    evt.preventDefault();
+    console.log("Butt Value", $("#m1butt").val());
+    if ($("#m1butt").val() === "0") {
+      usingTimer = setInterval(function () {
+        machineTimer(1, mObj[0].bal, mObj[0].mode, currency)
+      }, 1000);
+      $("#m1butt").val("1");
+      $("#m1butt").removeClass("btn-primary");
+      $("#m1butt").addClass("btn-danger");
+      $("#m1butt").html("STOP");
+      $("#m1butt").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:green\"></i></center>");
+    } else {
+      clearInterval(usingTimer);
+      $("#m1butt").val("0");
+      $("#m1butt").removeClass("btn-danger");
+      $("#m1butt").addClass("btn-primary");
+      $("#m1butt").html("START");
+      $("#m1butt").html("<center><i class=\"fa fa-circle\" aria-hidden=\"true\" style=\"color:red\"></i></center>");
+    }
+
+    // machineTimer(val, mObj[val].bal, mObj[val].mode, currency);
   });
 
   var checkBal1 = setInterval(() => {
@@ -72,7 +118,7 @@ var mReady = [false,false,false,false,false];
     mReady[0] ? socket.emit('mbal1', { m: 1 }) : true;
   }, 30000);
 
-  var checkBal2 = setInterval(() => {
+  /* var checkBal2 = setInterval(() => {
     console.log('checking every 30s');
     mReady[1] ? socket.emit('mbal2', { m: 2 }) : true;
   }, 30000);
@@ -90,7 +136,7 @@ var mReady = [false,false,false,false,false];
   var checkBal5 = setInterval(() => {
     console.log('checking every 30s');
     mReady[4] ? socket.emit('mbal5', { m: 5 }) : true;
-  }, 30000);
+  }, 30000); */
 
   // $("#inputMode1").on("change", function (evt) {
     // var inputMode1 = $("#inputMode1").val();
@@ -237,7 +283,7 @@ function getMachineAddress() {
       console.error(err);
     }
   });
-  $.ajax({
+  /* $.ajax({
     url: "/api/address?m=2",
     type: "GET",
     success: function (res) {
@@ -288,7 +334,7 @@ function getMachineAddress() {
     error: function (err) {
       console.error(err);
     }
-  });
+  }); */
 }
 
 function machineTimer(machine, bal, mode, curr) {
